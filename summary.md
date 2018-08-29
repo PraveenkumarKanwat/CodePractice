@@ -1,6 +1,6 @@
 # README
-###Files given below are responsible to send you the rollup emails which you receive on a regular basis and their function are given below.
-####These scripts are present on the `rts-db001.sliad.dataxu.net` after that it is present in `sudo su - dataxu` and in `bin/`.
+### Files given below are responsible to send you the rollup emails which you receive on a regular basis and their function are given below.
+#### These scripts are present on the `rts-db001.sliad.dataxu.net` after that it is present in `sudo su - dataxu` and in `bin/`.
 
 >**BUDGET_ROLLUP_TMP** : this is a file where budget rollup is stored temporarily 
 
@@ -26,4 +26,4 @@
 
 >**crontab** : the currently used crontab in db001. This file may not be visible on the server but can be seen using `crontab -l` 
 
-#####Other files include older version or not currently in used version or outdated version of the files.
+##### Other files include older version or not currently in used version or outdated version of the files.

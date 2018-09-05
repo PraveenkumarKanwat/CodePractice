@@ -1,29 +1,33 @@
-# README
-### Files given below are responsible to send you the rollup emails which you receive on a regular basis and their function are given below.
-#### These scripts are present on the `rts-db001.sliad.dataxu.net` after that it is present in `sudo su - dataxu` and in `bin/`.
+# Overview
+Files given below are responsible for sending the rollup emails which will be received on a regular basis.
+These scripts are located on `rts-db001.sliad.dataxu.net` under `/opt/dataxu/dxuser/bin/` for the `dataxu` user.
 
->**BUDGET_ROLLUP_TMP** : this is a file where budget rollup is stored temporarily 
+These scripts are not the part of `/opt/dxrts/bin/database/` folder but are located under `/opt/dataxu/dxuser/bin/`.
 
->**send_rollup.py** : this file is responsible to send the emails to the recipients included in this file. It takes arguments such as `hostname`, `username`, `prefix` and `message` using these it forwards an email with attachment if available.
+- **BUDGET_ROLLUP_TMP** : this is a file where budget rollup is stored temporarily and it is present only on the server.
 
->**loaded-budget-report.sh** : runs before `loaded-budget-email.py` and collects detailed data by running a psql script
+- **[send_rollup.py](send_rollup.py)** : this file is responsible for sending the emails to the recipients mentioned in this file. It takes arguments such as `hostname`, `username`, `prefix` and `message` using these it forwards an email with attachment if available.
 
->**loaded-budget-email.py** : this file is responsible to extract the summary of the data by running a psql script and then triggers `send_rollup.py` with params. The mail which has a subject `RTS revenue rollups as of ...` is received because of this.
+- **[loaded-budget-report.sh](loaded-budget-report.sh)** : runs before `loaded-budget-email.py` and collects detailed data by running a psql script.
 
->**budget-report.sh** : runs before `budget-email.py` and collects detailed data by running a psql script
+- **[loaded-budget-email.py](loaded-budget-email.py)** : this file is responsible to extract the summary of the data by running a psql script and then triggers `send_rollup.py` with params. This script produces the email with `RTS revenue rollups as of ...` subject.
 
->**budget-email.py** : this file is responsible to collect the summary of the data by running a psql script and then triggers `send_rollup.py` with params. The mail which has a subject `RTS media spend rollups as of ...` is received because of this.
+- **[budget-report.sh](budget-report.sh)** : runs before `budget-email.py` and collects detailed data by running a psql script
 
->**backup_rtsdb.sh** : hourly RTS DB backup job
+- **[budget-email.py](budget-email.py)** : this file is responsible for collecting the summary of the data by running a psql script and then triggers `send_rollup.py` with params. This script produces the email with `RTS media spend rollups as of ...` subject.
 
->**s3copyhourly.sh** : hourly RTS DB local dump copied to s3
+- **[backup_rtsdb.sh](backup_rtsdb.sh)** : hourly RTS DB backup job.
 
->**cleanBudgetLoaded.sh** : expire budget/loaded files
+- **[s3copyhourly.sh](s3copyhourly.sh)** : hourly copies RTS DB local dump to S3.
 
->**clean_budget_backups.sh** : hourly RTS DB local dump copied to s3
+- **[cleanBudgetLoaded.sh](cleanBudgetLoaded.sh)** : expire budget/loaded files.
 
->**expire_rtsdb.sh** :  expire db dumps older than 3 days
+- **[clean_budget_backups.sh](clean_budget_backups.sh)** : clean up RTS DB local dump older than 7 days.
 
->**[crontab](README.md)** : the currently used crontab in db001. This file may not be visible on the server but can be seen using `crontab -l` 
+- **[expire_rtsdb.sh](expire_rtsdb.sh)** :  removes db dumbs older than 3 days.
 
-##### Other files include older version or not currently in used version or outdated version of the files.
+- **[crontab](/rts-dist/src/main/dxad_home/cron/masterDatabaseCrons)** : the currently used master database crontab in rts-db001. Currently crons are configured via crontab, so this file is not present on the host directly. 
+
+Other files include older version or not currently in used version or outdated version of the files.
+
+**Note:** If the files location are changed to `/opt/dxrts/bin/database/email-rollups/` from this `/opt/dataxu/dxuser/bin/` futher changes needed to be made like changing the dependency location of `send_rollup.py` in files `budget-email.sh` and `loaded-email-budget.sh` from `/opt/dataxu/dxuser/bin/send_rollup.py` to `/opt/dxrts/bin/database/email-rollups/send_rollup.py`.
